@@ -3,22 +3,74 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link href="styles.css" rel="stylesheet">
   </head>
   <body>
+    <div id="logoDiv">
+      <img id="logo" src="http://www.reporting-focac.com/uploads/2/9/5/7/2957726/_7194920_orig.png" width="250px" height="150px" />
+    </div>
+    <div id="myDiv">
+       <h1>What are you doing?</h1>
+       <input type="text" name="post" placeholder="write a new tweet" style="height: 45px; width: 750px;">
+       <button id="myButton">update</button>
+       <br>
+       <a id="more" onclick="load()" href="#">load more</a>
+    </div>
+    <div id="tweets"></div>
     <script>
+      var $body = $('body');
+      var $div=$('#tweets');
+      var makeTweet=function(){
+          var $tweet = $('<div></div>');
+          var post= $('input').val();
+          $tweet.text('@' + "visitor" + ': ' + post);
+          $tweet.prependTo($div);
+          writeTweet(post);
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-
+      }
+      var load=function(){
         var index = streams.home.length - 1;
+        $div.html('');
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $('<div class="box"> <div class="username"></div></div>');
+          $tweet.find('.username').text('@' + tweet.user );
+          $tweet.append('<p class="message">' + tweet.message + '</p>');
+          $tweet.appendTo($div);
           index -= 1;
+          var $time=$('<p class="time"></p>')
+          $time.text(tweet.created_at)
+          $time.appendTo($tweet);
         }
+      }
+
+      var userTime=function(username){
+        var index = streams.users[username].length - 1;
+        $div.html('');
+        while(index >= 0){
+          var tweet = streams.users[username][index];
+          var $tweet = $('<div class="box"> <div class="username"></div></div>');
+          $tweet.find('.username').text('@' + tweet.user );
+          $tweet.append('<p class="message">' + tweet.message + '</p>');
+          $tweet.appendTo($div);
+          index -= 1;
+          var $time=$('<p class="time"></p>')
+          $time.text(tweet.created_at)
+          $time.appendTo($tweet);
+        }
+
+      }
+
+      $(document).ready(function(){
+        $('button').click(function(){
+            load();
+            makeTweet();
+          });
+        $body.on('click', '.username', function(event){
+          var userName=$(event.target).text().slice(1);
+          // load from streams.users[username]
+          userTime(userName);
+        })
 
       });
 

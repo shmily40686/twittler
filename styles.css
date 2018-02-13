@@ -1,0 +1,43 @@
+body{
+	background-color: powderblue;
+}
+
+div{
+	background-color: white;
+}
+
+#myDiv {
+	border: 5px solid #f1f1f1!important;
+}
+
+.box {
+	border: 5px solid #f1f1f1!important;
+}
+
+#logoDiv{
+	background-color:powderblue;
+}
+
+.username{
+	background-color: #f1f1f1!important;
+}
+
+button{
+	height: 50px;
+    width: 80px;
+    color: #0f1010;
+    background-color: #91b9ef;
+}
+.time{
+	font-size: 15px;
+	color: gray;
+}
+
+.message{
+	font-size:30px;
+}
+
+a#more{
+ font-size:20px;
+ margin: 0 auto;
+}

@@ -12,6 +12,7 @@ streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
 window.users = Object.keys(streams.users);
+var visitor="visitor";
 
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
@@ -62,8 +63,16 @@ var writeTweet = function(message){
   if(!visitor){
     throw new Error('set the global visitor property!');
   }
-  var tweet = {};
-  tweet.user = visitor;
-  tweet.message = message;
-  addTweet(tweet);
+  if(streams.users.hasOwnProperty(visitor)){
+     var tweet = {};
+    tweet.user = visitor;
+    tweet.message = message;
+    addTweet(tweet);
+  }else{
+    streams.users.visitor = [];
+    var tweet = {};
+    tweet.user = visitor;
+    tweet.message = message;
+    addTweet(tweet);
+  }
 };
